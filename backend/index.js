@@ -5,7 +5,7 @@ const path = require("path");
 
 const cors = require("cors");
 app.use(cors({
-  origin: "*",
+  origin: "https://realestatedef.vercel.app",
   methods: ["POST", "GET", "PUT", "DELETE"],
   credentials: true
 }));
