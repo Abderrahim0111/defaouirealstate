@@ -78,7 +78,12 @@ const google = async (req, res) => {
 
       if (newUser) {
         const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
-        res.cookie("jwt", token, { httpOnly: true });
+        res.cookie("jwt", token, { 
+          httpOnly: true, 
+          maxAge: 365 * 24 * 60 * 60 * 1000, // 1 year in milliseconds 
+          secure: true, // Set the secure attribute
+          sameSite: 'none' // Allow cross-site cookies
+        });
         res.json(newUser);
       }
     }
@@ -109,6 +114,12 @@ const update_profile = async (req, res) => {
 
   const { userData } = req.body;
   const parsedUserData = JSON.parse(userData);
+
+  if(parsedUserData.password){
+    const salt = await bcrypt.genSalt()
+    const hashedPass = await bcrypt.hash(parsedUserData.password, salt)
+    parsedUserData.password = hashedPass
+  }
 
   
   if (req.cookies.jwt) {
