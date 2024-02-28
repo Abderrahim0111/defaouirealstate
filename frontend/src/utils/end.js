@@ -1,1 +1,1 @@
-export const api = ""
+export const api = "https://realestate-liart-six.vercel.app/api"
