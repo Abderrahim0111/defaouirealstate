@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { api } from "../utils/end";
 
 const CreatListing = () => {
 
@@ -45,9 +46,10 @@ const CreatListing = () => {
         formdata.append("files", file);
       }
       try {
-        const res = await fetch("/api/listing/upload-files", {
+        const res = await fetch(`${api}/listing/upload-files`, {
           method: "POST",
           body: formdata,
+          credentials: 'include',
         });
         const data = await res.json();
         if (data.uploadSucces) {
@@ -120,12 +122,13 @@ const CreatListing = () => {
         imageUrls: imageUrls,
         userRef: currentUser._id,
       };
-      const res = await fetch("/api/listing/create", {
+      const res = await fetch(`${api}/listing/create`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(updatedListingData),
+        credentials: 'include',
       });
       const data = await res.json();
       if(!data.error){

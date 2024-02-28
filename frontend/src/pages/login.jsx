@@ -1,8 +1,10 @@
+/* eslint-disable react/no-unescaped-entities */
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import OAuth from "../components/OAuth";
 import { useSelector, useDispatch } from 'react-redux'
 import { loginSucces } from "../redux/user/userSlice";
+import { api } from "../utils/end";
 
 
 const Login = () => {
@@ -24,12 +26,13 @@ const Login = () => {
   const handleSubmit = async (eo) => {
     eo.preventDefault();
     setloading(true);
-    const res = await fetch("/api/login", {
+    const res = await fetch(`${api}/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(userData),
+      credentials: 'include',
     });
     const data = await res.json();
     if (data.error) {

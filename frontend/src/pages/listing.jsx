@@ -15,6 +15,7 @@ import {
 } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import Contact from "../components/contact";
+import { api } from "../utils/end";
 
 const Listing = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -25,7 +26,7 @@ const Listing = () => {
   useEffect(() => {
     const fetchListing = async () => {
       try {
-        const res = await fetch(`/api/listing/get/${listingId}`);
+        const res = await fetch(`${api}/listing/get/${listingId}`, {credentials: 'include',});
         const data = await res.json();
         if (data) {
           setListing(data);

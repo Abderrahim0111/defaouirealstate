@@ -1,9 +1,9 @@
-import React from "react";
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import { app } from "../firebase";
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { loginSucces } from "../redux/user/userSlice";
+import { api } from "../utils/end";
 
 const OAuth = () => {
   const navigate = useNavigate()
@@ -15,7 +15,7 @@ const OAuth = () => {
 
       const result = await signInWithPopup(auth, provider);
 
-      const res = await fetch("/api/google", {
+      const res = await fetch(`${api}/google`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -25,6 +25,7 @@ const OAuth = () => {
           email: result.user.email,
           photo: result.user.photoURL,
         }),
+        credentials: 'include',
       });
       const data = await res.json()
       if(!data.error){

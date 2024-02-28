@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import OAuth from "../components/OAuth";
 import { useSelector, useDispatch } from 'react-redux'
 import { loginSucces } from "../redux/user/userSlice";
+import { api } from "../utils/end";
 
 const Register = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -23,12 +24,13 @@ const Register = () => {
   const handleSubmit = async (eo) => {
     eo.preventDefault();
     setloading(true);
-    const res = await fetch("/api/register", {
+    const res = await fetch(`${api}/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(userData),
+      credentials: 'include',
     });
     const data = await res.json();
     if (data.error) {

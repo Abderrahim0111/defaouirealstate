@@ -3,6 +3,7 @@ import { useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { loginSucces } from "../redux/user/userSlice";
 import { Link, useNavigate } from "react-router-dom";
+import { api } from "../utils/end";
 
 const Profile = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -27,9 +28,10 @@ const Profile = () => {
     formData.append("avatar", file);
     formData.append("userData", JSON.stringify(userData));
     try {
-      const res = await fetch("/api/update-profile", {
+      const res = await fetch(`${api}/update-profile`, {
         method: "POST",
         body: formData,
+        credentials: 'include',
       });
       const data = await res.json();
       if (data.error) {
@@ -45,8 +47,9 @@ const Profile = () => {
   };
   const handleDeleteUser = async () => {
     try {
-      const res = await fetch("/api/delete-user", {
+      const res = await fetch(`${api}/delete-user`, {
         method: "DELETE",
+        credentials: 'include',
       });
       const data = await res.json();
       if (data.error) {
@@ -61,7 +64,7 @@ const Profile = () => {
   };
   const handleSignOut = async () => {
     try {
-      const res = await fetch("/api/sign-out");
+      const res = await fetch(`${api}/sign-out`, {credentials: 'include',});
       const data = await res.json();
       if (data.error) {
         return seterror(data.error);
@@ -78,7 +81,7 @@ const Profile = () => {
   };
   const handleShowListings = async () => {
     try {
-      const res = await fetch("/api/listings");
+      const res = await fetch(`${api}/listings`, {credentials: 'include',});
       const data = await res.json();
       if (!data.error) {
         seterror("");
@@ -90,7 +93,7 @@ const Profile = () => {
   };
   const handleDeleteListing = async (listingId) => {
     try {
-      const res = await fetch(`/api/listing/delete/${listingId}`, {
+      const res = await fetch(`${api}/listing/delete/${listingId}`, {
         method: "DELETE",
       });
       const data = await res.json();

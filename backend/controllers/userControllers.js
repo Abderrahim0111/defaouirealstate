@@ -21,7 +21,12 @@ const register = async (req, res) => {
     const user = await User.create({ username, email, password });
     if (user) {
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-      res.cookie("jwt", token, { httpOnly: true });
+      res.cookie("jwt", token, { 
+        httpOnly: true, 
+        maxAge: 365 * 24 * 60 * 60 * 1000, // 1 year in milliseconds 
+        secure: true, // Set the secure attribute
+        sameSite: 'none' // Allow cross-site cookies
+      });
       res.json(user);
     }
   } catch (error) {
@@ -41,7 +46,12 @@ const login = async (req, res) => {
         return res.json({ error: "incorrect password" });
       } else {
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-        res.cookie("jwt", token, { httpOnly: true });
+        res.cookie("jwt", token, { 
+          httpOnly: true, 
+          maxAge: 365 * 24 * 60 * 60 * 1000, // 1 year in milliseconds 
+          secure: true, // Set the secure attribute
+          sameSite: 'none' // Allow cross-site cookies
+        });
         res.json(user);
       }
     }

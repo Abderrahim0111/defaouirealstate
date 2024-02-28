@@ -4,7 +4,11 @@ app.use(express.json());
 const path = require("path");
 
 const cors = require("cors");
-app.use(cors());
+app.use(cors({
+  origin: "*",
+  methods: ["POST", "GET", "PUT", "DELETE"],
+  credentials: true
+}));
 
 const dotenv = require("dotenv");
 dotenv.config();
@@ -29,9 +33,3 @@ const userRouter = require("./routes/userRoutes");
 const listingRouter = require("./routes/listingRoutes");
 app.use("/api", userRouter);
 app.use("/api/listing", listingRouter);
-
-app.use(express.static(path.join(__dirname, "..", "/frontend/dist")));
-
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "..", "frontend", "dist", "index.html"));
-});

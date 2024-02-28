@@ -1,6 +1,7 @@
 import  { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ListingItem from "../components/listingItem";
+import { api } from "../utils/end";
 
 const Search = () => {
   const [sidebardata, setsidebardata] = useState({
@@ -48,7 +49,7 @@ const Search = () => {
     const fetchListings = async () => {
         setLoading(true);
         const searchQuery = urlParams.toString();
-        const res = await fetch(`/api/listing/get?${searchQuery}`);
+        const res = await fetch(`${api}/listing/get?${searchQuery}`, {credentials: 'include',});
         const data = await res.json();
         setListings(data);
         setLoading(false);

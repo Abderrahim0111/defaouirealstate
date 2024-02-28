@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+/* eslint-disable react/prop-types */
+import  { useState } from "react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { api } from "../utils/end";
 
 const Contact = ({ listing }) => {
   const [landlord, setlandlord] = useState(null);
@@ -8,7 +10,7 @@ const Contact = ({ listing }) => {
   useEffect(() => {
     const fetchLandlord = async () => {
       try {
-        const res = await fetch(`/api/${listing.userRef}`);
+        const res = await fetch(`${api}/${listing.userRef}`, {credentials: 'include',});
         const data = await res.json();
         setlandlord(data);
       } catch (error) {
