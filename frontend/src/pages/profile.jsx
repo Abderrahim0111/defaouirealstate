@@ -46,8 +46,6 @@ const Profile = () => {
     }
   };
   const handleDeleteUser = async () => {
-    const confirm2 = window.confirm("Delete account?")
-    if(!confirm2) return
     try {
       const res = await fetch(`${api}/delete-user`, {
         method: "DELETE",
@@ -170,7 +168,7 @@ const Profile = () => {
           </Link>
         </div>
         <div className=" flex justify-between text-red-600">
-          <button type="button" onClick={handleDeleteUser}>Delete account</button>
+          <button onClick={handleDeleteUser}>Delete account</button>
           <button type="button" onClick={handleSignOut}>
             Sign out
           </button>
