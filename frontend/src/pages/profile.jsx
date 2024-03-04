@@ -45,23 +45,6 @@ const Profile = () => {
       setloading(false);
     }
   };
-  const handleDeleteUser = async () => {
-    try {
-      const res = await fetch(`${api}/delete-user`, {
-        method: "DELETE",
-        credentials: 'include',
-      });
-      const data = await res.json();
-      if (data.error) {
-        return seterror(data.error);
-      }
-      seterror("");
-      dispatch(loginSucces(null));
-      navigate("/login");
-    } catch (error) {
-      console.log(error);
-    }
-  };
   const handleSignOut = async () => {
     try {
       const res = await fetch(`${api}/sign-out`, {credentials: 'include',});
@@ -167,12 +150,9 @@ const Profile = () => {
             Create Listing
           </Link>
         </div>
-        <div className=" flex justify-between text-red-600">
-          <button onClick={handleDeleteUser}>Delete account</button>
-          <button type="button" onClick={handleSignOut}>
+          <button type="button" className=" bg-red-700 text-white p-3 rounded-lg text-center hover:opacity-95 uppercase" onClick={handleSignOut}>
             Sign out
           </button>
-        </div>
         {error ? <p>{error}</p> : null}
         <button
           type="button"
