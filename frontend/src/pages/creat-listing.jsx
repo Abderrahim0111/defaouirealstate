@@ -8,6 +8,7 @@ const CreatListing = () => {
   const { currentUser } = useSelector((state) => state.user);
   const [imageUrls, setimageUrls] = useState([]);
   const [loading, setloading] = useState(false);
+  const [loadingS, setloadingS] = useState(false);
   const [uploadErrors, setuploadErrors] = useState("");
   const [submitErrors, setsubmitErrors] = useState("");
   const [files, setfiles] = useState([]);
@@ -116,7 +117,7 @@ const CreatListing = () => {
     try {
       if(listingData.imageUrls.length < 1) return setsubmitErrors('You must upload at least one image')
       if(+listingData.regularPrice < +listingData.discountPrice) return setsubmitErrors('Discount price must be lower than the regular price')
-      setloading(true)
+      setloadingS(true)
       const updatedListingData = {
         ...listingData,
         imageUrls: imageUrls,
@@ -132,16 +133,16 @@ const CreatListing = () => {
       });
       const data = await res.json();
       if(!data.error){
-        setloading(false)
+        setloadingS(false)
         setsubmitErrors('')
         navigate(`/listing/${data._id}`)
       }else{
         setsubmitErrors(data.error)
-        setloading(false)
+        setloadingS(false)
       }
     } catch (error) {
       setsubmitErrors(error.message);
-      setloading(false)
+      setloadingS(false)
     }
   };
   return (
@@ -349,7 +350,7 @@ const CreatListing = () => {
               );
             })}
           <button className=" p-3 bg-slate-700 text-white rounded-lg uppercase hover:opacity-95">
-            Create Listing
+            {loadingS? "Loading..." : "Create Listing"}
           </button>
           {submitErrors && <p className=" text-red-600">{submitErrors}</p>}
         </div>
