@@ -22,8 +22,6 @@ const Profile = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = async (eo) => {
-    const confirm1 = window.confirm("Update profile?")
-    if(!confirm1) return
     eo.preventDefault();
     setloading(true);
     const formData = new FormData();
@@ -172,7 +170,7 @@ const Profile = () => {
           </Link>
         </div>
         <div className=" flex justify-between text-red-600">
-          <button onClick={handleDeleteUser}>Delete account</button>
+          <button type="button" onClick={handleDeleteUser}>Delete account</button>
           <button type="button" onClick={handleSignOut}>
             Sign out
           </button>
