@@ -96,6 +96,8 @@ const Profile = () => {
     }
   };
   const handleDeleteListing = async (listingId) => {
+    const confirm = window.confirm("Delete this listing?")
+    if(!confirm) return
     try {
       const res = await fetch(`${api}/listing/delete/${listingId}`, {
         method: "DELETE",
@@ -184,7 +186,7 @@ const Profile = () => {
           Show listings
         </button>
         {userListings && userListings.length > 0 && (
-          <div className=" flex flex-col gap-4">
+          <div className=" flex flex-col gap-4 mb-5">
             <h1 className=" text-center mt-7 text-2xl font-semibold">
               Your listings
             </h1>
