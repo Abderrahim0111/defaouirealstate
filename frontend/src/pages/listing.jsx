@@ -20,6 +20,7 @@ import { api } from "../utils/end";
 const Listing = () => {
   const { currentUser } = useSelector((state) => state.user);
   const [contact, setcontact] = useState(false);
+  const [loading, setloading] = useState(true);
   SwiperCore.use([Navigation]);
   const { listingId } = useParams();
   const [listing, setListing] = useState(null);
@@ -30,6 +31,7 @@ const Listing = () => {
         const data = await res.json();
         if (data) {
           setListing(data);
+          setloading(false)
         }
       } catch (error) {
         console.log(error);
@@ -37,6 +39,7 @@ const Listing = () => {
     };
     fetchListing();
   }, []);
+  if(loading) return <p>Loading...</p>
   return (
     <main>
       <main>

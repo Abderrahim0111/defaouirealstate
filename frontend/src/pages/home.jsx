@@ -12,8 +12,8 @@ export default function Home() {
   const [offerListings, setOfferListings] = useState([]);
   const [saleListings, setSaleListings] = useState([]);
   const [rentListings, setRentListings] = useState([]);
+  const [loading, setloading] = useState(true);
   SwiperCore.use([Navigation]);
-  useEffect(() => {}, []);
   useEffect(() => {
     const fetchOfferListings = async () => {
       try {
@@ -47,12 +47,14 @@ export default function Home() {
         });
         const data = await res.json();
         setSaleListings(data);
+        setloading(false);
       } catch (error) {
         console.log(error);
       }
     };
     fetchOfferListings();
-  }, []);
+  }, [offerListings, saleListings, rentListings]);
+  if (loading) return <p>Loading...</p>;
   return (
     <div>
       {/* top */}
@@ -77,7 +79,7 @@ export default function Home() {
       </div>
 
       {/* swiper */}
-      <Swiper navigation autoplay={{delay: 2500}} loop={true}>
+      <Swiper navigation autoplay={{ delay: 3000 }} loop={true}>
         {offerListings &&
           offerListings.length > 0 &&
           offerListings.map((listing) => (
@@ -86,8 +88,8 @@ export default function Home() {
                 style={{
                   background: `url(${listing.imageUrls[0]}) center no-repeat`,
                   backgroundSize: "cover",
+                  height: "500px",
                 }}
-                className="h-[500px]"
               ></div>
             </SwiperSlide>
           ))}

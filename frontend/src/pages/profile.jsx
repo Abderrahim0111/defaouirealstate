@@ -22,8 +22,8 @@ const Profile = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = async (eo) => {
-    const confirm = window.confirm("Update profile?")
-    if(!confirm) return
+    const confirm1 = window.confirm("Update profile?")
+    if(!confirm1) return
     eo.preventDefault();
     setloading(true);
     const formData = new FormData();
@@ -48,8 +48,8 @@ const Profile = () => {
     }
   };
   const handleDeleteUser = async () => {
-    const confirm = window.confirm("Delete account?")
-    if(!confirm) return
+    const confirm2 = window.confirm("Delete account?")
+    if(!confirm2) return
     try {
       const res = await fetch(`${api}/delete-user`, {
         method: "DELETE",
