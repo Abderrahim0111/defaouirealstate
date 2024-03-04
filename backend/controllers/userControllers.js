@@ -15,7 +15,7 @@ const register = async (req, res) => {
   try {
     const objError = validationResult(req);
     if (objError.errors.length > 0) {
-      return res.json({ error: "invalid email OR invalid password" });
+      return res.json({ error: "Password must be at least 8 characters with 1 upper case letter and 1 number" });
     }
     const { username, email, password } = req.body;
     const user = await User.create({ username, email, password });
